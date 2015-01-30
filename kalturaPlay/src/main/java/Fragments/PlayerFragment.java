@@ -17,7 +17,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
 import com.kaltura.kalturaplayertoolkit.R;
 import com.kaltura.playersdk.KPPlayerConfig;
@@ -28,6 +30,8 @@ import com.kaltura.playersdk.events.KPlayerJsCallbackReadyListener;
 import com.kaltura.playersdk.events.OnToggleFullScreenListener;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,6 +51,7 @@ public class PlayerFragment extends Fragment {
 //    private static final String ARG_PARAM2 = "param2";
 
     private PlayerViewController mPlayerView;
+    private Spinner mDropDownList;
     private static final int FULL_SCREEN_FLAG = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
     // TODO: Rename and change types of parameters
 //    private String mParam1;
@@ -90,6 +95,13 @@ public class PlayerFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View fragmentView = inflater.inflate(R.layout.fragment_player, container, false);
+        mDropDownList = (Spinner) fragmentView.findViewById(R.id.spinner);
+        List<String> list = new ArrayList<String>();
+        list.add("list 1");
+        list.add("list 2");
+        list.add("list 3");
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, list);
+        mDropDownList.setAdapter(dataAdapter);
         mPlayerView = (PlayerViewController) fragmentView.findViewById(R.id.player);
         mPlayerView.setActivity(getActivity());
         mPlayerView.setOnFullScreenListener(new OnToggleFullScreenListener() {

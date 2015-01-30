@@ -1,14 +1,20 @@
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="Fragments.PlayerFragment">
+    <Spinner
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        xmlns:tools="http://schemas.android.com/tools"
-        tools:context="Fragments.PlayerFragment">
+        android:layout_weight="2"
+        android:id="@+id/spinner"
+        android:background="@color/orange"
 
-        <com.kaltura.playersdk.PlayerViewController xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/player"/>
-    </LinearLayout>
+        android:layout_height="wrap_content" />
+    <com.kaltura.playersdk.PlayerViewController
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:id="@+id/player"/>
+</LinearLayout>
 
