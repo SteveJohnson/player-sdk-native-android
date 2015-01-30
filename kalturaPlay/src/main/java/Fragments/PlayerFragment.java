@@ -20,6 +20,7 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.kaltura.kalturaplayertoolkit.R;
 import com.kaltura.playersdk.KPPlayerConfig;
@@ -27,6 +28,8 @@ import com.kaltura.playersdk.PlayerViewController;
 import com.kaltura.playersdk.RequestDataSource;
 import com.kaltura.playersdk.events.KPlayerEventListener;
 import com.kaltura.playersdk.events.KPlayerJsCallbackReadyListener;
+import com.kaltura.playersdk.events.OnAudioTrackSwitchingListener;
+import com.kaltura.playersdk.events.OnAudioTracksListListener;
 import com.kaltura.playersdk.events.OnToggleFullScreenListener;
 
 import java.lang.reflect.Method;
@@ -97,9 +100,7 @@ public class PlayerFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_player, container, false);
         mDropDownList = (Spinner) fragmentView.findViewById(R.id.spinner);
         List<String> list = new ArrayList<String>();
-        list.add("list 1");
-        list.add("list 2");
-        list.add("list 3");
+        list.add(" Audio Tracks List Being Populated..  ");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, list);
         mDropDownList.setAdapter(dataAdapter);
         mPlayerView = (PlayerViewController) fragmentView.findViewById(R.id.player);
@@ -110,6 +111,35 @@ public class PlayerFragment extends Fragment {
             public void onToggleFullScreen() {
                 setFullScreen();
 
+            }
+        });
+        mPlayerView.registerListenerAudioTracksList(new OnAudioTracksListListener() {
+            @Override
+            public void OnAudioTracksList(List<String> list, int defaultTrackIndex) {
+                Log.d(TAG, "On Audio Tracks List");
+                if (list.size() > 0) {
+                    String[] items = (String[]) list.toArray();
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
+                    mDropDownList.setAdapter(adapter);
+                    mDropDownList.setSelection(defaultTrackIndex);
+                }
+
+            }
+        });
+
+        mPlayerView.registerListenerAudioTrackSwitch(new OnAudioTrackSwitchingListener() {
+            @Override
+            public void onAudioSwitchingStart(int oldTrackIndex, int newTrackIndex) {
+                Log.d(TAG, "On Audio Switching Start");
+            }
+
+            @Override
+            public void onAudioSwitchingEnd(int newTrackIndex) {
+                Log.d(TAG, "On Audio Switching End");
+                if(newTrackIndex >= 0) {
+                    mDropDownList.setSelection(newTrackIndex);
+                    Toast.makeText(getActivity(),"Audio Track changed",Toast.LENGTH_LONG).show();
+                }
             }
         });
         mPlayerView.registerJsCallbackReady(new KPlayerJsCallbackReadyListener() {
@@ -160,6 +190,9 @@ public class PlayerFragment extends Fragment {
                         }
                     }
                 });
+
+
+
 
             }
 

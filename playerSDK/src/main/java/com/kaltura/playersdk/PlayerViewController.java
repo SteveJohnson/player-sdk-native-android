@@ -26,6 +26,8 @@ import com.kaltura.playersdk.chromecast.ChromecastHandler;
 import com.kaltura.playersdk.events.KPlayerEventListener;
 import com.kaltura.playersdk.events.KPlayerJsCallbackReadyListener;
 import com.kaltura.playersdk.events.Listener;
+import com.kaltura.playersdk.events.OnAudioTrackSwitchingListener;
+import com.kaltura.playersdk.events.OnAudioTracksListListener;
 import com.kaltura.playersdk.events.OnCastDeviceChangeListener;
 import com.kaltura.playersdk.events.OnCastRouteDetectedListener;
 import com.kaltura.playersdk.events.OnErrorListener;
@@ -76,6 +78,8 @@ public class PlayerViewController extends RelativeLayout {
     private HashMap<String, ArrayList<KPlayerEventListener>> mKplayerEventsMap = new HashMap<String, ArrayList<KPlayerEventListener>>();
     private HashMap<String, KPlayerEventListener> mKplayerEvaluatedMap = new HashMap<String, KPlayerEventListener>();
     private KPlayerJsCallbackReadyListener mJsReadyListener;
+    private OnAudioTracksListListener mAudioTracksListListener;
+    private OnAudioTrackSwitchingListener mAudioSwitichingListener;
 
     public String host = DEFAULT_HOST;
     public String html5Url = DEFAULT_HTML5_URL;
@@ -177,6 +181,14 @@ public class PlayerViewController extends RelativeLayout {
             }
         }
         mgr.setStreamVolume(AudioManager.STREAM_MUSIC, (int)percent, 0);
+    }
+
+    public void registerListenerAudioTracksList(OnAudioTracksListListener listener){
+        mAudioTracksListListener = listener;
+    }
+
+    public void registerListenerAudioTrackSwitch(OnAudioTrackSwitchingListener listener){
+        mAudioSwitichingListener = listener;
     }
 
 
@@ -562,6 +574,9 @@ public class PlayerViewController extends RelativeLayout {
 
             }
         });
+
+        mVideoInterface.registerListener(mAudioTracksListListener);
+        mVideoInterface.registerListener(mAudioSwitichingListener);
     }
 
     private static class ErrorBuilder {
