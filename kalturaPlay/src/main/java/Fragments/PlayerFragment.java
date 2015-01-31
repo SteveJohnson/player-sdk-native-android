@@ -118,7 +118,10 @@ public class PlayerFragment extends Fragment {
             public void OnAudioTracksList(List<String> list, int defaultTrackIndex) {
                 Log.d(TAG, "On Audio Tracks List");
                 if (list.size() > 0) {
-                    String[] items = (String[]) list.toArray();
+                    String[] items = new String[list.size()];
+                    for (int i =0; i<list.size(); i++){
+                        items[i] = list.get(i);
+                    }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
                     mDropDownList.setAdapter(adapter);
                     mDropDownList.setSelection(defaultTrackIndex);
@@ -138,7 +141,7 @@ public class PlayerFragment extends Fragment {
                 Log.d(TAG, "On Audio Switching End");
                 if(newTrackIndex >= 0) {
                     mDropDownList.setSelection(newTrackIndex);
-                    Toast.makeText(getActivity(),"Audio Track changed",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(),"Audio Track Loaded",Toast.LENGTH_LONG).show();
                 }
             }
         });

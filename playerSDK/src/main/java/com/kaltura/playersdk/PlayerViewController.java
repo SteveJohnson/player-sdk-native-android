@@ -504,6 +504,8 @@ public class PlayerViewController extends RelativeLayout {
         mVideoInterface.removeListener(Listener.EventType.PLAYHEAD_UPDATE_LISTENER_TYPE);
         mVideoInterface.removeListener(Listener.EventType.PROGRESS_UPDATE_LISTENER_TYPE);
         mVideoInterface.removeListener(Listener.EventType.ERROR_LISTENER_TYPE);
+        mVideoInterface.removeListener(Listener.EventType.AUDIO_TRACK_SWITCH_LISTENER_TYPE);
+        mVideoInterface.removeListener(Listener.EventType.AUDIO_TRACKS_LIST_LISTENER_TYPE);
     }
 
     private void setPlayerListeners() {

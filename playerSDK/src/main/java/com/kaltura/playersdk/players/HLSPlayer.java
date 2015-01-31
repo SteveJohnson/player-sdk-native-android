@@ -53,6 +53,7 @@ public class HLSPlayer extends BasePlayerView implements
 
     @Override
     public void setVideoUrl(String url) {
+        url = "http://54.169.47.74/masterstitch.m3u8?entryId=126ae943&url=http%3A%2F%2F111.223.97.115%2Fhls%2Fnl%2Findex-timeshifting.m3u8&uid=1c2ef485_46.20.235.45";
         if ( mPlayer.getVideoUrl() == null || !url.equals(mPlayer.getVideoUrl())) {
             mPlayer.setVideoUrl(url);
         }
