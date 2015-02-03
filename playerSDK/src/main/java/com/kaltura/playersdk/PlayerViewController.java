@@ -94,6 +94,7 @@ public class PlayerViewController extends RelativeLayout {
 
     private boolean mWvMinimized = false;
 
+    private Handler mainHandler;
     public PlayerViewController(Context context) {
         super(context);
         setupPlayerViewController( context );
@@ -132,8 +133,9 @@ public class PlayerViewController extends RelativeLayout {
 
     private void setupPlayerViewController( final Context context) {
         mPowerManager = (PowerManager) context.getSystemService(context.POWER_SERVICE);
-        // Get a handler that can be used to post to the main thread
+
         Handler mainHandler = new Handler(context.getMainLooper());
+        // Get a handler that can be used to post to the main thread
         Runnable myRunnable = new Runnable() {
             @Override
             public void run() {
@@ -409,6 +411,17 @@ public class PlayerViewController extends RelativeLayout {
         }
     }
 
+    public void hardSwitchAudioTrack( int newAudioIndex ){
+        if (mVideoInterface instanceof AlternateAudioTracksInterface){
+            ((AlternateAudioTracksInterface) mVideoInterface).hardSwitchAudioTrack(newAudioIndex);
+        }
+    }
+    public void softSwitchAudioTrack( int newAudioIndex ){
+        if (mVideoInterface instanceof AlternateAudioTracksInterface){
+            ((AlternateAudioTracksInterface) mVideoInterface).softSwitchAudioTrack(newAudioIndex);
+        }
+    }
+
     // /////////////////////////////////////////////////////////////////////////////////////////////
     // Kaltura Player external API
     // /////////////////////////////////////////////////////////////////////////////////////////////
@@ -477,7 +490,7 @@ public class PlayerViewController extends RelativeLayout {
                 String values = "";
 
                 if (eventValues != null) {
-                    for ( int i=0; i< eventValues.length; i++ ) {
+                    for ( int i=0; i < eventValues.length; i++ ) {
                         if ( eventValues[i] instanceof String ) {
                             values += "'" + eventValues[i] + "'";
                         } else {

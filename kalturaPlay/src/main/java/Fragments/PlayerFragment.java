@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -100,7 +101,7 @@ public class PlayerFragment extends Fragment {
         View fragmentView = inflater.inflate(R.layout.fragment_player, container, false);
         mDropDownList = (Spinner) fragmentView.findViewById(R.id.spinner);
         List<String> list = new ArrayList<String>();
-        list.add(" Audio Tracks List Being Populated..  ");
+        list.add(" Please Press Play  ");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_spinner_item, list);
         mDropDownList.setAdapter(dataAdapter);
         mPlayerView = (PlayerViewController) fragmentView.findViewById(R.id.player);
@@ -125,6 +126,17 @@ public class PlayerFragment extends Fragment {
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
                     mDropDownList.setAdapter(adapter);
                     mDropDownList.setSelection(defaultTrackIndex);
+                    mDropDownList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            mPlayerView.hardSwitchAudioTrack(position);
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
                 }
 
             }
