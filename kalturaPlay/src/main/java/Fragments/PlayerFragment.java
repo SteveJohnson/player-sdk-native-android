@@ -56,6 +56,7 @@ public class PlayerFragment extends Fragment {
 
     private PlayerViewController mPlayerView;
     private Spinner mDropDownList;
+    private boolean mDidTapPlay = false;
     private static final int FULL_SCREEN_FLAG = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN;
     // TODO: Rename and change types of parameters
 //    private String mParam1;
@@ -125,11 +126,13 @@ public class PlayerFragment extends Fragment {
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, items);
                     mDropDownList.setAdapter(adapter);
-                    mDropDownList.setSelection(defaultTrackIndex);
+
                     mDropDownList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            mPlayerView.hardSwitchAudioTrack(position);
+                            if (mDidTapPlay) {
+                                mPlayerView.hardSwitchAudioTrack(position);
+                            }
                         }
 
                         @Override
@@ -165,6 +168,7 @@ public class PlayerFragment extends Fragment {
 
                     @Override
                     public void onKPlayerEvent(Object body) {
+                        mDidTapPlay = true;
                         Log.d(TAG, "doPlay event called");
                         setFullScreen();
                         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -219,7 +223,7 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public String getWid() {
-                return "_243342";
+                return "_1843021";
             }
 
             @Override
@@ -230,12 +234,12 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public String getUiConfId() {
-                return "21384602";
+                return "28168501";
             }
 
             @Override
             public String getServerAddress() {
-                return "http://cdnbakmi.kaltura.com/html5/html5lib/v2.27.2/mwEmbedFrame.php";
+                return "http://cdnbakmi.kaltura.com/html5/html5lib/v2.25.2/mwEmbedFrame.php";
             }
 
             @Override
@@ -247,7 +251,7 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public String getEntryId() {
-                return "0_c0r624gh";
+                return "0_br68b15i";
             }
 
             @Override
@@ -395,7 +399,7 @@ public class PlayerFragment extends Fragment {
 
     private void showIframeView() {
         showPlayerView();
-        mPlayerView.setComponents( getActivity().getIntent().getStringExtra(getString(R.string.prop_iframe_url)));
+        mPlayerView.setComponents(getActivity().getIntent().getStringExtra(getString(R.string.prop_iframe_url)));
     }
 
     @Override
@@ -424,14 +428,17 @@ public class PlayerFragment extends Fragment {
 
     @Override
     public void onPause() {
+        mDidTapPlay = false;
         super.onPause();
         if ( mPlayerView != null ) {
             mPlayerView.releaseAndSavePosition();
+
         }
     }
 
     @Override
     public void onResume() {
+        mDidTapPlay = false;
         super.onResume();
         if ( mPlayerView != null ) {
             mPlayerView.resumePlayer();

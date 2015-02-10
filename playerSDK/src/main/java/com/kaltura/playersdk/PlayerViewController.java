@@ -264,7 +264,7 @@ public class PlayerViewController extends RelativeLayout {
     public void setComponents(RequestDataSource requestDataSource) {
         String iframeUrl = RequestHandler.videoRequestURL(requestDataSource);
 //		String iframeUrl = host + html5Url + "?wid=_" + partnerId + "&uiconf_id=" + playerId + "&entry_id=" + entryId + "&flashvars[Kaltura.LeadHLSOnAndroid]=true";
-        iframeUrl = "http://cdnapi.kaltura.com/html5/html5lib/v2.24.1/mwEmbedFrame.php?&wid=_243342&uiconf_id=25675992&cache_st=1408262198&entry_id=1_bhej6q2a&flashvars[liveCore]=%7B%22disableLiveCheck%22%3Atrue%7D&playerId=videoTag&forceMobileHTML5=true&urid=2.24.1";
+//        iframeUrl = "http://cdnapi.kaltura.com/html5/html5lib/v2.24.1/mwEmbedFrame.php?&wid=_243342&uiconf_id=25675992&cache_st=1408262198&entry_id=1_bhej6q2a&flashvars[liveCore]=%7B%22disableLiveCheck%22%3Atrue%7D&playerId=videoTag&forceMobileHTML5=true&urid=2.24.1";
 
         setComponents(iframeUrl);
     }
