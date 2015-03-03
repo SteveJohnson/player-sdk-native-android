@@ -239,7 +239,8 @@ public class PlayerFragment extends Fragment {
 
             @Override
             public String getServerAddress() {
-                return "http://cdnbakmi.kaltura.com/html5/html5lib/v2.25.2/mwEmbedFrame.php";
+                return "http://10.0.21.71/html5.kaltura/mwEmbed/mwEmbedFrame.php";
+//                return "http://cdnbakmi.kaltura.com/html5/html5lib/v2.25.2/mwEmbedFrame.php";
             }
 
             @Override
