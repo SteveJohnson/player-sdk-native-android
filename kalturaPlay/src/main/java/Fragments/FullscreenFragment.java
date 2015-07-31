@@ -156,6 +156,8 @@ public class FullscreenFragment extends Fragment{
         Bundle bundle = getArguments();
         String iFrameUrl;
         if (bundle != null && (iFrameUrl = bundle.getString(getString(R.string.prop_iframe_url))) != null){
+            //HardCoding iFrameUrl for testing purpose
+            iFrameUrl = "http://player.kaltura.com///mwEmbedFrame.php?&wid=_1636891&uiconf_id=25345621&entry_id=0_567q4tqy";
             mPlayerView.setComponents(iFrameUrl);
         }else{
             mPlayerView.setComponents(new RequestDataSource() {
